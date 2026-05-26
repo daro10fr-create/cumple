@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Paulek querida</title>
+
+<style>
+body{
+    margin:0;
+    position: relative;
+    font-family:'Poppins', sans-serif;
+    background:black;
+    color:lime;
+    overflow:hidden;
+}
+
+.sticker{
+    position:absolute;
+    width:70px;
+    animation:floatSticker 8s linear infinite;
+    opacity:0.85;
+    z-index:10;
+    bottom: -150px;
+}
+
+#texto{
+    position: relative;
+    z-index: 2;
+}
+
+#mensaje{
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0px 3px 12px rgba(0,0,0,0.7);
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+@keyframes floatSticker{
+    0%{
+        transform: translateY(120vh) rotate(0deg);
+        opacity: 0;
+    }
+    10%{opacity: 1;}
+    100%{
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* FINAL */
+#final{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    flex-direction:column;
+    position:relative;
+    padding:20px;
+    color:white;
+    font-family:'Quicksand', sans-serif;
+}
+
+/* 🌅 atardecer */
+.sunset{
+    background: linear-gradient(135deg, #ff6a00, #ffb199, #7f7fd5, #86a8e7);
+    background-size:400% 400%;
+    animation:grad 10s ease infinite;
+}
+
+@keyframes grad{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* ✨ brillitos */
+.sparkle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    animation:float 6s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes float{
+    from{transform:translateY(100vh); opacity:0;}
+    to{transform:translateY(-10vh); opacity:1;}
+}
+
+/* glitch */
+.glitch{
+    animation:glitch 0.2s infinite;
+}
+
+@keyframes glitch{
+    0%{transform:translate(0)}
+    25%{transform:translate(2px,-2px)}
+    50%{transform:translate(-2px,2px)}
+    75%{transform:translate(2px,2px)}
+    100%{transform:translate(0)}
+}
+.card button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.card{
+    display:none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background:rgba(255,255,255,0.15);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+
+    width: min(90vw, 520px);
+    margin: 0 auto;
+
+    z-index:2;
+    text-align:center;
+}
+
+h1{color:#fff;}
+
+</style>
+
+</head>
+
+<body>
+
+<h2 id="texto"></h2>
+
+<div id="final">
+
+    <div class="card">
+
+        <h1>Feliz cumpleañoossss 🎂</h1>
+
+        <h2 id="nombreFinal"></h2>
+
+        <p id="mensaje"></p>
+
+        <button onclick="mostrarExtra()">Finalizar</button>
+
+        <p id="extra" style="display:none; margin-top:20px;">
+        Cupón para salir a comer (no tengo ni un sucre, suerte)<br>
+        Programé de nuevo por ti, mua
+        </p>
+
+    </div>
+
+</div>
+
+<audio id="musica" loop>
+<source src="lofi.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let tituloOriginal = "Paulek querida";
+let tituloAlerta = "⚠ ACCEDIENDO...";
+
+let parpadeo = setInterval(() => {
+    document.title = document.title === tituloOriginal 
+        ? tituloAlerta 
+        : tituloOriginal;
+}, 600);
+
+let nombre = prompt("Ingrese el nombre de la persona a vigilar");
+let comida = prompt("Comida favorita:");
+let anime = prompt("Anime favorito:");
+let aura = prompt("Considera que tiene mucha aura?");
+let vibra = prompt("Considera que es una chica buena o mala?");
+
+let mensajes = [
+"Iniciando secuencia...",
+"▰▰▰ Cargando recuerdos...",
+"▰▰▰ Detectando emociones...",
+"Usuario: " + nombre,
+"",
+"Estado: haciendo cara de bobita mientras hace esto :)",
+"",
+"Eres más tierna que un minino...",
+"",
+"-100000 aura...",
+"",
+"Preparando traspaso de información...",
+"..."
+];
+
+let i = 0;
+
+/* TYPEWRITER */
+function escribirTexto(texto, elementoId, velocidad = 35){
+    let j = 0;
+    let elemento = document.getElementById(elementoId);
+    elemento.innerHTML = "";
+
+    function escribir(){
+        if(j < texto.length){
+            elemento.innerHTML += texto.charAt(j);
+            j++;
+            setTimeout(escribir, velocidad);
+        }
+    }
+    escribir();
+}
+
+/* HACKER FLOW */
+function escribir(){
+
+document.body.classList.add("glitch");
+
+if(i < mensajes.length){
+
+document.getElementById("texto").innerHTML = mensajes[i];
+i++;
+
+setTimeout(escribir, 900);
+
+}else{
+
+document.body.classList.remove("glitch");
+mostrarFinal();
+
+}
+
+}
+
+/* STICKERS */
+function spawnStickers(){
+
+let imgs = ["gato1.jpg","gato2.jpg","gato3.jpg"];
+
+for(let k=0;k<12;k++){
+
+let img=document.createElement("img");
+
+img.src = imgs[Math.floor(Math.random()*imgs.length)];
+
+img.className="sticker";
+
+img.style.left = Math.random()*100+"vw";
+img.style.animationDuration = (Math.random()*5+6)+"s";
+img.style.width = (50 + Math.random()*40) + "px";
+
+document.body.appendChild(img);
+
+}
+
+}
+
+/* FINAL */
+function mostrarFinal(){
+
+clearInterval(parpadeo);
+document.title = "Feliz cumpleaños 💙";
+
+document.body.classList.remove("glitch");
+document.body.classList.add("sunset");
+
+document.getElementById("texto").style.display="none";
+
+let final = document.getElementById("final");
+final.style.display = "flex";
+
+document.querySelector(".card").style.display = "flex";
+
+document.getElementById("nombreFinal").innerHTML =
+nombre + " de mi corazón <3";
+
+let carta = `
+Gracias por existir 💙
+
+No sé ni como empezar esta carta.
+
+El tiempo que te llevo conociendo no refleja lo importante que eres para mí.
+
+Eres un pequeño rayo de sol en un día nublado.
+
+Gracias por tus autistadas, por tus chistes, por hacerme enojar, por hacerme reír.
+
+Entre todos los gustos que tienes (raros por cierto), es vdd que tu skin legendaria te ayuda.
+
+Te deseo un feliz cumpleaños 🎂
+
+Te adoro tanto como Gojo a Geto.
+(Te dejo ser Satoru ok) ✨
+`;
+
+setTimeout(() => {
+    escribirTexto(carta, "mensaje", 25);
+}, 600);
+
+spawnStickers();
+spawnSparkles();
+
+document.getElementById("musica").play();
+
+}
+
+/* SPARKLES */
+function spawnSparkles(){
+
+for(let i=0;i<25;i++){
+
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDuration=(Math.random()*5+3)+"s";
+document.body.appendChild(s);
+
+}
+
+}
+
+/* EXTRA */
+function mostrarExtra(){
+document.getElementById("extra").style.display="block";
+}
+
+/* START */
+escribir();
+
+</script>
+
+</body>
+</html>
